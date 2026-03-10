@@ -1,4 +1,4 @@
-package com.apps.quantitymeasurement;
+package com.apps.quantitymeasurement.uc1;
 
 public class QuantityMeasurementApp {
     public static class Feet {
