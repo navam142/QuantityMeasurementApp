@@ -31,12 +31,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid LoginRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.username(), request.password()));
         String token = jwtUtil.generateToken(request.username());
         return ResponseEntity.ok(Map.of("token", token));
     }
-
 
 
 }

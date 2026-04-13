@@ -29,7 +29,7 @@ public class BankingService {
 
     public String register(RegisterRequest req) {
         if (req.initialDeposit() != 1000) {
-            throw new IllegalArgumentException("Initial deposit balance must be 0 INR");
+            throw new IllegalArgumentException("Initial deposit balance must be 1000 INR"); // Corrected message for consistency
         }
 
         if (userRepository.existsByUsername(req.username())) {
@@ -41,7 +41,7 @@ public class BankingService {
         User user = new User();
         user.setUsername(req.username());
         user.setEmail(req.email());
-        user.setPassword(req.password());
+        user.setPassword(passwordEncoder.encode(req.password()));
         user.setMobile(req.phoneNumber());
         user.setAccountNumber(accountNumber);
         user.setBalance(1000.0);
