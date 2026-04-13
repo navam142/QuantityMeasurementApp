@@ -3,6 +3,7 @@ package com.bank.sbi.service;
 import com.bank.sbi.dto.RegisterRequest;
 import com.bank.sbi.dto.TransferRequest;
 import com.bank.sbi.dto.UpdateContactRequest;
+import com.bank.sbi.exception.InsufficientFundsException;
 import com.bank.sbi.model.User;
 import com.bank.sbi.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -56,11 +57,21 @@ public class BankingService {
         return accNo;
     }
 
-    private String depoist(double amount) {
+    public String deposit(double amount) {
         User user = getCurrentUser();
         user.setBalance(user.getBalance() + amount);
         userRepository.save(user);
         return "₹" + amount + " deposited successfully. New Balance: ₹" + user.getBalance();
+    }
+
+    public String withdraw(double amount) {
+        User user = getCurrentUser();
+        if (user.getBalance() < amount) {
+            throw new InsufficientFundsException("Insufficient funds. Available: ₹" + user.getBalance());
+        }
+        user.setBalance(user.getBalance() - amount);
+        userRepository.save(user);
+        return "₹" + amount + " withdrawn successfully. New Balance: ₹" + user.getBalance();
     }
 
     public String transfer(TransferRequest req) {
