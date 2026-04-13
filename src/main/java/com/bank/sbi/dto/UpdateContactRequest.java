@@ -3,5 +3,5 @@ package com.bank.sbi.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 
-public record UpdateContact(@Email String email, @Pattern(regexp = "^[6-9]\\d{9}$") String mobile) {
+public record UpdateContactRequest(@Email String email, @Pattern(regexp = "^[6-9]\\d{9}$") String mobile) {
 }
