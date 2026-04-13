@@ -83,6 +83,8 @@ public class BankingService {
         User receiver = userRepository.findByAccountNumber(req.toAccountNumber())
                 .orElseThrow(() -> new RuntimeException("Receiver account not found"));
 
+        System.out.println("receiver : " + receiver.getUsername());
+
         sender.setBalance(sender.getBalance() - req.amount());
         receiver.setBalance(receiver.getBalance() + req.amount());
 
